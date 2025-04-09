@@ -41,12 +41,12 @@ const verifyAuth = async (ctx, next) => {
   }
   
   const token = authorization.replace("Bearer ", "");
-
   // 2. 验证token
   try {
     const result = jwt.verify(token, PUBLIC_KEY, {
       algorithms: ["RS256"],
     });
+
     ctx.user = result;
     await next();
   } catch (err) {

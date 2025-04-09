@@ -4,18 +4,26 @@ const Article = require("./models/article.model");
 
 class ArticleService {
   async create(data) {
-    const { title, content } = data;
-    await connectToDatabase();
-    const now = moment();
-    const formattedNow = now.format("YYYY-MM-DD HH:mm:ss");
-    const newArticle = new Article({
-      title,
-      content,
-      createdAt: formattedNow,
-      updatedAt: formattedNow,
-    });
-    const result = await newArticle.save();
-    return result;
+    try {
+      const { title, content, description, tags } = data;
+      await connectToDatabase();
+      const now = moment();
+      const formattedNow = now.format("YYYY-MM-DD HH:mm:ss");
+      const newArticle = new Article({
+        title,
+        content,
+        description,
+        tags,
+        createdAt: formattedNow,
+        updatedAt: formattedNow,
+      });
+      const result = await newArticle.save();
+      return result;
+    } catch (error) {
+      console.log(error);
+      
+    }
+   
   }
 
   async update(data) {

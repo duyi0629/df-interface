@@ -7,7 +7,17 @@ const app = new Koa();
 
 // 处理跨域
 app.use(cors({
-  origin: [ 'http://localhost:5173'], // 允许的源
+  origin: (ctx) => {
+    const allowedOrigins = [
+      'http://localhost:5173',
+      'http://localhost:5174',
+    ];
+    const requestOrigin = ctx.header.origin;
+    if (allowedOrigins.includes(requestOrigin)) {
+      return requestOrigin; // 返回客户端 Origin
+    }
+    return false; // 拒绝跨域
+  }, // 允许的源
   methods: ['GET', 'POST', 'PUT', 'DELETE'],        // 允许的方法
   allowHeaders: ['Content-Type', 'Authorization', 'Accept'],  // 允许的请求头
   credentials: true, // 允许携带凭证（如cookies）

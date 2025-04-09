@@ -1,4 +1,8 @@
 const mongoose = require("mongoose");
+const slug = require('mongoose-slug-generator');
+const autopopulate = require('mongoose-autopopulate');
+mongoose.plugin(slug);
+mongoose.plugin(autopopulate);
 
 async function main() {
   // 这块用127.0.0.1 避免用localhost 可能会访问到ipv6的地址
