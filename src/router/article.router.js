@@ -1,7 +1,11 @@
 const Router = require('koa-router')
-const { create, update, remove, list  } = require('../controller/article.controller')
+const { create, update, remove, list, getById  } = require('../controller/article.controller')
 const { verifyAuth } = require('../middleware/auth.middleware')
 const articleRouter = new Router({prefix: '/article'})
+
+
+// 文章列表薪火集
+articleRouter.post('/list', list)
 
 // 创建文章
 articleRouter.post('/', verifyAuth, create)
@@ -12,7 +16,8 @@ articleRouter.post('/:articleId', verifyAuth, update)
 // 删除文章
 articleRouter.delete('/:articleId', verifyAuth, remove)
 
-// 文章列表
-articleRouter.get('/', list)
+// 文章详情
+articleRouter.get('/:articleId', getById)
+
 
 module.exports = articleRouter

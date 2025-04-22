@@ -8,7 +8,6 @@ const verifyLogin = async (ctx, next) => {
   console.log("verifyLogin", "验证登录的中间件");
   // 获取用户名和密码
   const { username, password } = ctx.request.body;
-
   // 2. 判断用户名, 密码是否为空
   if (!username || !password) {
     const error = new Error(errorTypes.NAME_OR_PASSWORD_IS_REQUIRED);
@@ -21,6 +20,7 @@ const verifyLogin = async (ctx, next) => {
     const error = new Error(errorTypes.USER_IS_NOT_EXISTS);
     return ctx.app.emit("error", error, ctx);
   }
+  console.log( md5Password(password), user.password, "验证登录的中间件");
 
   // 4. 判断密码是否与数据库中的一致
   if (md5Password(password) !== user.password) {
@@ -28,6 +28,8 @@ const verifyLogin = async (ctx, next) => {
     return ctx.app.emit("error", error, ctx);
   }
   ctx.user = user;
+  console.log("verifyLogin",user,  "验证登录的中间件");
+
   await next();
 };
 

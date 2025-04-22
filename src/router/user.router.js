@@ -7,6 +7,7 @@ const userRouter = new Router({prefix: '/users'})
 userRouter.post('/', verifyUser, handlePassword, create)
 
 userRouter.get('/list', verifyAuth, list)
+
 // userRouter.post('/',  create)
 
 module.exports = userRouter

@@ -11,6 +11,8 @@ app.use(cors({
     const allowedOrigins = [
       'http://localhost:5173',
       'http://localhost:5174',
+      'http://39.105.103.166:8899',
+      'http://39.105.103.166:8888'
     ];
     const requestOrigin = ctx.header.origin;
     if (allowedOrigins.includes(requestOrigin)) {

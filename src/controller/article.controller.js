@@ -1,19 +1,27 @@
-const { create, update, remove, list } = require("../service/article.service");
+const { create, getById, update, remove, list } = require("../service/article.service");
 
 class ArticleController {
   async create(ctx, next) {
     const { title, content } = ctx.request.body;
-    console.log(title, content);
-
     if (!title || !content) {
       ctx.status = 400;
       ctx.body = { message: "标题、内容和作者是必填项" };
       return;
     }
-    const result = await create({ title, content });
+    const result = await create(ctx.request.body);
     ctx.body = {
       code: 200,
-      data: '已发布'
+      data: "已发布",
+    };
+  }
+
+  async getById(ctx, next) {
+    const { articleId } = ctx.params;
+    const result = await getById(articleId);
+    ctx.body = {
+      code: 200,
+      message: "",
+      data: result,
     };
   }
 
@@ -23,8 +31,8 @@ class ArticleController {
     const result = await update({ articleId, title, content });
     ctx.body = {
       code: 200,
-        message: "已更新",
-        data: result,
+      message: "已更新",
+      data: result,
     };
   }
 
@@ -41,10 +49,11 @@ class ArticleController {
   }
 
   async list(ctx, next) {
-    const result = await list();
+    const { articles, pageInfo} = await list(ctx.request.body);
     ctx.body = {
       code: 200,
-      data: result,
+      data: articles,
+      pageInfo
     };
   }
 }

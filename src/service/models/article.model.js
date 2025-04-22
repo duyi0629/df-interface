@@ -49,12 +49,6 @@ const ArticleSchema = new Schema({
     type: Date, 
     default: Date.now 
   },
-  slug: { 
-    type: String, 
-    unique: true,
-    slug: "title", 
-    slug_padding_size: 2 
-  },
 
   // SEO优化
   seo: SEOSchema,
@@ -88,7 +82,7 @@ const ArticleSchema = new Schema({
     main: { 
       type: String, 
       required: true,
-      enum: ['技术', '生活', '旅行', '科技'] 
+      enum: ['星火集', '碎碎念'] 
     },
     sub: { type: String }
   },
@@ -157,6 +151,8 @@ ArticleSchema.pre('save', function(next) {
   this.last_modified = new Date();
   next();
 });
+
+
 
 // 创建索引
 ArticleSchema.index({ title: 'text', content: 'text' }); // 全文搜索
