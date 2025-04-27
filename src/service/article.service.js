@@ -47,6 +47,8 @@ class ArticleService {
       createdAt: timestamp,
       updatedAt: timestamp,
     });
+
+
     return newArticle.save();
   }
 
@@ -99,7 +101,7 @@ class ArticleService {
   async list(params) {
     // 解构赋值获取分页参数和关键词，设置默认值
     const { pageNum = 1, pageSize = 10, keyword = '' } = params;
-    console.log('分页到这');
+    console.log(pageNum , pageSize, keyword, ' = 10')
     try {
         // 确保数据库连接
         await this.ensureConnected();
@@ -131,6 +133,12 @@ class ArticleService {
         throw error;
     }
 }
+
+
+  // 搜索
+  async search(keyworld, page){
+    
+  }
   validateArticleId(articleId) {
     if (!mongoose.Types.ObjectId.isValid(articleId)) {
       throw new InvalidIdError(`Invalid article ID format: ${articleId}`);

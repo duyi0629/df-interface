@@ -1,4 +1,4 @@
-const { create, getById, update, remove, list } = require("../service/article.service");
+const { create, getById, update, remove, list, search } = require("../service/article.service");
 
 class ArticleController {
   async create(ctx, next) {
@@ -9,6 +9,7 @@ class ArticleController {
       return;
     }
     const result = await create(ctx.request.body);
+    
     ctx.body = {
       code: 200,
       data: "已发布",
@@ -49,13 +50,14 @@ class ArticleController {
   }
 
   async list(ctx, next) {
-    const { articles, pageInfo} = await list(ctx.request.body);
+    const { articles, pageInfo} = await list(ctx.query);
     ctx.body = {
       code: 200,
       data: articles,
       pageInfo
     };
   }
+
 }
 
 module.exports = new ArticleController();

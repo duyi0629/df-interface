@@ -37,12 +37,15 @@ const verifyAuth = async (ctx, next) => {
   console.log("校验授权的中间件");
   // 1. 获取token
   const authorization = ctx.header.authorization;
+
   if (!authorization) {
     const error = new Error(errorTypes.UNAUTHORIZATION);
     return ctx.app.emit("error", error, ctx);
   }
   
   const token = authorization.replace("Bearer ", "");
+
+
   // 2. 验证token
   try {
     const result = jwt.verify(token, PUBLIC_KEY, {
